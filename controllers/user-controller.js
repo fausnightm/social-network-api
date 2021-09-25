@@ -10,10 +10,8 @@ const userController = {
         })
         .select('-__v')
         .then(dbUserData => res.json(dbUserData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err)
-        })
+        .catch(err => { console.log(err); res.status(400).json(err) });
+
     },
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
@@ -29,18 +27,14 @@ const userController = {
             }
             res.json(dbUserData);
         })
-        .catch((err) => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+        .catch(err => { console.log(err); res.status(400).json(err) });
+
     },
     createUser({ body }, res) {
         User.create(body)
           .then((dbUserData) => res.json(dbUserData))
-          .catch((err) => {
-              console.log(err)
-              res.status(400).json(err)
-          });
+          .catch(err => { console.log(err); res.status(400).json(err) });
+
       },
       updateUser({ params, body }, res) {
           User.findOneAndUpdate({_id: params.id }, body, {new: true})
@@ -69,12 +63,12 @@ const userController = {
                 .then(() => {
                     res.json({ message: "Successfully deleted user" });
                 })
-                .catch((err) => res.status(400).json(err));
+                .catch(err => { console.log(err); res.status(400).json(err) });
             })
-            .catch((err) => res.status(400).json(err));
-          })
-          .catch((err) => res.status(400).json(err));
-      },
+            .catch(err => { console.log(err); res.status(400).json(err) });
+        })
+          .catch(err => { console.log(err); res.status(400).json(err) });
+        },
       addFriend ({ params }, res) {
           User.findOneAndUpdate({ _id: params.id }, { $push: { friends: params.friendId } }, { new: true })
         //   .populate({path: 'friends', select: ('-__v')})
@@ -86,8 +80,8 @@ const userController = {
              }
              res.json(dbUserData)
          })
-         .catch((err) => res.status(404).json(err)); 
-      },
+         .catch(err => { console.log(err); res.status(400).json(err) });
+        },
       deleteFriend({ params }, res) {
         Users.findOneAndUpdate({_id: params.id}, {$pull: { friends: params.friendId}}, {new: true})
         // .populate({path: 'friends', select: '-__v'})
@@ -99,7 +93,7 @@ const userController = {
             }
             res.json(dbUsersData);
         })
-        .catch(err => res.status(400).json(err));
+        .catch(err => { console.log(err); res.status(400).json(err) });
     }
 }
 
